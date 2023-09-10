@@ -26,8 +26,13 @@ const rateLimiter = rateLimit({
 app.use(xssClean());
 app.use(cookieParser());
 app.use(morgan("dev"));
+<<<<<<< HEAD
 app.use(express.json());
 // app.use(express.urlencoded({extended:true,limit:'50mb'}));
+=======
+app.use(express.json({limit:'50mb'}));
+app.use(express.urlencoded({extended:true,limit:'50mb'}));
+>>>>>>> 564954b56cab4a03f01b77a637b91b517f204dd9
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cors());
