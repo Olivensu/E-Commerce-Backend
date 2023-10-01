@@ -104,7 +104,7 @@ const handleUpdateProduct = async(req, res, next) =>{
         
         const options = {new: true, runValidators:true, context: 'query'};
         let update = {};
-        const allowedFields = ['name', 'description', 'price', 'category', 'discountPrice','shipping','quantity',];
+        const allowedFields = ['name', 'description', 'price', 'category', 'discountPrice','shipping','quantity','isAvailable','isTrending','isPopular','isDealDay','isFlashSale'];
 
         for(const key in req.body){
             if(allowedFields.includes(key)){

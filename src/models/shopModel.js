@@ -42,7 +42,7 @@ const shopSchema = new Schema({
     },
     isShow: {
         type: Boolean,
-        default: true,
+        default: false,
     },
     isTrending: {
         type: Boolean,

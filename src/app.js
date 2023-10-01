@@ -15,6 +15,7 @@ const categoryRouter = require('./routers/categoryRouter');
 const productRouter = require('./routers/productRouter');
 const shopRouter = require('./routers/shopRouter');
 const orderRouter = require('./routers/orderRouter');
+const eventRouter = require('./routers/eventRouter');
 const app = express();
 
 const rateLimiter = rateLimit({
@@ -37,6 +38,7 @@ app.use('/api/category',categoryRouter)
 app.use('/api/product',productRouter)
 app.use('/api/shop',shopRouter)
 app.use('/api/order',orderRouter)
+app.use('/api/event',eventRouter)
 
 const isloggedin = (req,res,next) =>{
     const login = true;

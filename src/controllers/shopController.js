@@ -28,7 +28,7 @@ const handleCreateShop = async(req, res, next) =>{
         }
 
         const user = await User.findOneAndUpdate({email: email}, {isSeller:true},{ new: true });
-        if(user){
+        if(!user){
             throw createError(409, 'User is not found')
         }
 
@@ -106,7 +106,7 @@ const handleUpdateShop = async(req, res, next) =>{
         
         const options = {new: true, runValidators:true, context: 'query'};
         let update = {};
-        const allowedFields = ['name','email','phone','city','zip', 'description',];
+        const allowedFields = ['name','email','phone','city','zip', 'description','isShow','isTrending','isPopular','isFlashSale'];
 
         for(const key in req.body){
             if(allowedFields.includes(key)){
@@ -134,6 +134,15 @@ const handleUpdateShop = async(req, res, next) =>{
         if(!updateShop){
             throw createError(404, 'Shop with this slug does not exist')
         }
+
+        if(update.isShow === true || update.isShow === false){
+            const products = await Product.find({shopSlug:slug})
+            for(const product of products){
+                await Product.findByIdAndUpdate(product._id, {isAvailable:update.isShow},{new: true})
+            }
+        }else{
+            return;
+        }
     return successResponse(res, {
         statusCode: 200,
         message: `Shop update successfully`,
@@ -150,9 +159,20 @@ const handleDeleteShop = async(req, res, next) =>{
         const {slug} = req.params;
 
         const newDeleteShop = await Shop.findOneAndDelete({slug})
+
     if(!newDeleteShop){
         throw createHttpError(400, 'Shop not found')
     }
+    const products = await Product.find({shopSlug:slug})
+    if(products.length !== 0){
+        for(const product of products){
+            const newDeleteProduct = await Product.findByIdAndDelete(product._id)
+        if(!newDeleteProduct){
+            throw createHttpError(400, 'Product not found')
+        }
+        }
+    }
+
     return successResponse(res, {
         statusCode: 200,
         message: `Shop deleted successfully`,

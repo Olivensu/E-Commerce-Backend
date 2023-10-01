@@ -452,8 +452,6 @@ const deleteUserById = async(req, res, next) =>{
         
         deleteImage(userImagePath)
 
-
-
       await User.findByIdAndDelete({_id:id, isAdmin: false})
 
     return successResponse(res, {

@@ -255,6 +255,76 @@ orderRouter.get('/order/:email', async(req, res, next) => {
     }
 })
 
+orderRouter.get('/', async(req, res, next) => {
+    try {
+        const orders = await Order.find();
+
+        if(!orders){
+            throw createError(404, 'User not found');
+        }
+
+    return successResponse(res, {
+        statusCode: 200,
+        message: 'orders is return',
+        payload: orders
+    })
+    } catch (error) {
+        if(error instanceof mongoose.Error){
+            next(createError(400, 'Invalid User Id'))
+            return;
+        }
+        next(error)
+    }
+})
+
+orderRouter.get('/:id', async(req, res, next) => {
+    try {
+        const id = req.params.id
+        const orders = await Order.findById(id);
+
+        if(!orders){
+            throw createError(404, 'User not found');
+        }
+
+    return successResponse(res, {
+        statusCode: 200,
+        message: 'orders is return',
+        payload: orders
+    })
+    } catch (error) {
+        if(error instanceof mongoose.Error){
+            next(createError(400, 'Invalid User Id'))
+            return;
+        }
+        next(error)
+    }
+})
+
+orderRouter.put('/status', async(req, res, next) => {
+    try {
+      const {_id, status} = req.body;
+      const options = {new: true, runValidators:true, context: 'query'};
+      const updateOrders = await Order.findByIdAndUpdate(_id,{status:status},options)
+        // const orders = await Order.find();
+
+        if(!updateOrders){
+            throw createError(404, 'User not found');
+        }
+
+    return successResponse(res, {
+        statusCode: 200,
+        message: 'orders is updated',
+        payload: updateOrders
+    })
+    } catch (error) {
+        if(error instanceof mongoose.Error){
+            next(createError(400, 'Invalid User Id'))
+            return;
+        }
+        next(error)
+    }
+})
+
 orderRouter.put('/cart/quantity', async (req, res, next) => {
     try {
       const { id, quantity, email } = req.body;

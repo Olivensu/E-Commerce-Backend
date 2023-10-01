@@ -85,6 +85,10 @@ const productSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    isDealDay: {
+        type: Boolean,
+        default: false,
+    },
     isFlashSale: {
         type: Boolean,
         default: false,
