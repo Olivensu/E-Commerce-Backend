@@ -11,7 +11,7 @@ const smtpUsername = process.env.SMTP_USERNAME || '';
 const smtpPassword = process.env.SMTP_PASSWORD || '';
 const clientUrl = process.env.CLIENT_URL || '';
 const uploadFile = process.env.UPLOAD_FILE || 'public/image/users';
-const maxFileSize = process.env.MAX_FILE_SIZE || 2097152;
+const maxFileSize = process.env.MAX_FILE_SIZE || 5097152;
 const allowedFileTypes = process.env.ALLOWED_FILE_TYPE || ['jpg', 'jpeg', 'png',];
 
 module.exports ={serverPort,mongoDBURL,defaultImgURL,resetPasswordKey,refreshKey,activationKey,accessKey,smtpUsername,smtpPassword,clientUrl,uploadFile, maxFileSize,allowedFileTypes}
