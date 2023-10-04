@@ -1,5 +1,19 @@
 const {Schema, model} = require("mongoose");
 
+const review = new Schema({
+    name: {
+        type: String,
+    },
+    date: {
+        type: String,
+    },
+    review: {
+        type: String,
+    },
+    rating: {
+        type: Number,
+    },
+})
 // name, slug, description, price, quantity, sold, shipping, discountPrice, image,
 const productSchema = new Schema({
     name: {
@@ -93,6 +107,7 @@ const productSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    reviews: [review]
 }, {timestamps: true});
 
 const Product = model('Product', productSchema);

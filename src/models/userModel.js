@@ -18,6 +18,22 @@ const order = new Schema({
     order: {
         type: mongoose.Schema.Types.Mixed, // Store any type of data
       },
+      name: {
+        type: String,
+        required: [true, 'User name is required'],
+      },
+    email: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: Number,
+      required: true,
+    },
       status: {
         type: String,
         default: 'Ordered'
