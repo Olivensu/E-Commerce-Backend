@@ -34,6 +34,15 @@ const orderSchema = new Schema({
     status: {
         type: String,
         default: 'Ordered'
+      },
+    itemTotalPrice: {
+        type: Number,
+      },
+    shippingCost: {
+        type: Number,
+      },
+    totalPrice: {
+        type: Number,
       }
 
 }, {timestamps: true});

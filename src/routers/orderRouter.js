@@ -9,7 +9,7 @@ const orderRouter = express.Router();
 
 orderRouter.post('/checkout', async (req, res, next) => {
   try {
-    const { order, email, address, phone, name } = req.body;
+    const { order, email, address, phone, name,itemTotalPrice,shippingCost,totalPrice } = req.body;
     const user = await User.findOne({ email: email });
     // console.log(order);
 
@@ -24,6 +24,9 @@ orderRouter.post('/checkout', async (req, res, next) => {
       name: name,
       address: address,
       phone: phone,
+      itemTotalPrice: itemTotalPrice,
+      shippingCost: shippingCost,
+      totalPrice: totalPrice,
     });
     // userOrder.orders.push(order);
 
@@ -37,6 +40,9 @@ orderRouter.post('/checkout', async (req, res, next) => {
       name: name,
       address: address,
       phone: phone,
+      itemTotalPrice: itemTotalPrice,
+      shippingCost: shippingCost,
+      totalPrice: totalPrice,
       });
     await user.save(); 
 
@@ -309,6 +315,16 @@ orderRouter.put('/status', async(req, res, next) => {
 
         if(!updateOrders){
             throw createError(404, 'User not found');
+        }
+        if(status=== 'Delivered'){
+
+          const orders = await Order.findById(_id);
+          
+          for(const order of orders.orders){
+            const product =await Product.findById(order.cartItem._id);
+            const sold = product.sold + order.quantity
+            await Product.findByIdAndUpdate(order.cartItem._id,{sold:sold},options)
+          }
         }
 
     return successResponse(res, {
